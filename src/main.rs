@@ -16,6 +16,10 @@ fn get_args() -> Vec<String> {
     env::args().collect()
 }
 
+fn parse_config(args: &[String]) -> (&str, &str) {
+    (&args[1], &args[2])
+}
+
 // fn get_file_content(filename: &str) -> Result<String, std::io::Error>{
 //     fs::read_to_string(filename)
 // }

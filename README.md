@@ -12,3 +12,9 @@
 ### The args Function and Invalid Unicode
 - Note that `std::env::args` will panic if any argument contains invalid Unicode
 - If your program needs to accept arguments containing invalid Unicode, use `std::env::args_os` instead
+
+### Separation of Concerns for Binary Projects
+- Guidelines for splitting the separate concerns of a binary program when `main` starts getting large
+  - Split your program into a `main.rs` and a `lib.rs` and move your program’s logic to `lib.rs` 
+  - As long as your command line parsing logic is small, it can remain in `main.rs`
+  - When the command line parsing logic starts getting complicated, extract it from `main.rs` and move it to `lib.rs`
