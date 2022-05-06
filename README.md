@@ -18,3 +18,12 @@
   - Split your program into a `main.rs` and a `lib.rs` and move your program’s logic to `lib.rs` 
   - As long as your command line parsing logic is small, it can remain in `main.rs`
   - When the command line parsing logic starts getting complicated, extract it from `main.rs` and move it to `lib.rs`
+___
+## [A Shortcut for Propagating Errors: the ? Operator](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator)
+- The ? placed after a `Result` value does one of the following:
+  - If the value of the `Result` is an `Ok`, the value inside the `Ok` will get returned from the expression, and the program will continue
+  - If the value is an `Err`, the `Err` will be returned from the whole function as if we had used the `return` keyword so _the error value gets propagated to the calling code_
+- Difference between `match` expression and what the ? operator does
+  - error values that have the ? operator called on them go through the `from` function, defined in the `From` trait in the standard library, which is used to convert errors from one type into another 
+  - When the ? operator calls the `from` function, the error type received is converted into the error type defined in the return type of the current function
+  - As long as there’s an `impl From<OtherError> for ReturnedError` to define the conversion in the trait’s `from` function, the ? operator takes care of calling the `from` function automatically
