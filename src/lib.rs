@@ -7,7 +7,7 @@ pub struct Config {
     filename: String,
 }
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
+    pub fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("not enough parameters");
         }
@@ -28,4 +28,33 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>>{
     println!("pattern: {}", config.pattern);
     println!("file content:\n{}", file_content);
     Ok(())
+}
+
+fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_resullt() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick all 3!
+        ";
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+    }
+
 }
